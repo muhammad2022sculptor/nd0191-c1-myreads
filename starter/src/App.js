@@ -1,12 +1,11 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import * as BookApi from "./BooksAPI";
 import SearchPage from "./SearchPage";
 import HomePage from "./HomePage";
 
 function App() {
-  const [showSearchPage, setShowSearchPage] = useState(false);
-
   useEffect(() => {
     const getAll = async () => {
       let res = await BookApi.getAll();
@@ -17,17 +16,10 @@ function App() {
 
   return (
     <div className="app">
-      {showSearchPage ? (
-        <SearchPage
-          showSearchPage={showSearchPage}
-          setShowSearchPage={setShowSearchPage}
-        />
-      ) : (
-        <HomePage
-          showSearchPage={showSearchPage}
-          setShowSearchPage={setShowSearchPage}
-        />
-      )}
+      <Routes>
+        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/search" element={<SearchPage />}></Route>
+      </Routes>
     </div>
   );
 }
