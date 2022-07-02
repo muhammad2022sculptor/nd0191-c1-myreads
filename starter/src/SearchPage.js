@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import BookShelf from "./BookShelf";
 
-export default function SearchPage() {
+export default function SearchPage({ title, books, setSelectedShelf }) {
   return (
     <div className="search-books">
       <div className="search-books-bar">
@@ -14,6 +15,11 @@ export default function SearchPage() {
       </div>
       <div className="search-books-results">
         <ol className="books-grid"></ol>
+        <BookShelf
+          title={title}
+          books={books}
+          setSelectedShelf={setSelectedShelf}
+        />
       </div>
     </div>
   );
