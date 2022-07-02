@@ -60,7 +60,6 @@ function App() {
           element={
             booksFetched && (
               <SearchPage
-                title="Search Result"
                 books={allAvaiableBooks}
                 setSelectedShelf={setSelectedShelf}
               />
