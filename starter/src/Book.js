@@ -15,7 +15,7 @@ export default function Book({ book, setSelectedShelf }) {
           ></div>
           <div className="book-shelf-changer">
             <select
-              value={book.shelf}
+              value={book.shelf || "none"}
               onChange={(event) => {
                 setSelectedShelf(event.target.value, book);
               }}
