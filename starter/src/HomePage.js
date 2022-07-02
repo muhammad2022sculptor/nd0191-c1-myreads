@@ -1,8 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import BookShelf from "./BookShelf";
+import PropTypes from "prop-types";
 
-export default function HomePage() {
+export default function HomePage({
+  readBooks,
+  currentBooks,
+  toReadBooks,
+  setSelectedShelf,
+}) {
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -10,9 +16,27 @@ export default function HomePage() {
       </div>
       <div className="list-books-content">
         <div>
-          <BookShelf title="Currently Reading" />
-          <BookShelf title="Want to Read" />
-          <BookShelf title="Read" />
+          {currentBooks && (
+            <BookShelf
+              title="Currently Reading"
+              books={currentBooks}
+              setSelectedShelf={setSelectedShelf}
+            />
+          )}
+          {toReadBooks && (
+            <BookShelf
+              title="Want to Read"
+              books={toReadBooks}
+              setSelectedShelf={setSelectedShelf}
+            />
+          )}
+          {readBooks && (
+            <BookShelf
+              title="Read"
+              books={readBooks}
+              setSelectedShelf={setSelectedShelf}
+            />
+          )}
         </div>
       </div>
       <div className="open-search">
@@ -21,3 +45,9 @@ export default function HomePage() {
     </div>
   );
 }
+
+HomePage.propTypes = {
+  readBooks: PropTypes.array.isRequired,
+  currentBooks: PropTypes.array.isRequired,
+  toReadBooks: PropTypes.array.isRequired,
+};

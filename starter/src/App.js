@@ -22,21 +22,51 @@ function App() {
     setBooksFetched(true);
   };
 
+  async function setSelectedShelf(shelf, book) {
+    await BookApi.update(book, shelf);
+    setBooksFetched(false);
+  }
+
   useEffect(() => {
     if (!booksFetched) {
       getAll();
     }
-    console.log(allAvaiableBooks);
-    console.log(toReadBooks);
-    console.log(currentBooks);
-    console.log(readBooks);
+    // console.log(allAvaiableBooks);
+    // console.log(toReadBooks);
+    // console.log(currentBooks);
+    // console.log(readBooks);
+    // console.log(readBooks[0].imageLinks.smallThumbnail);
   }, [booksFetched]);
 
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={<HomePage />}></Route>
-        <Route path="/search" element={<SearchPage />}></Route>
+        <Route
+          path="/"
+          element={
+            booksFetched && (
+              <HomePage
+                currentBooks={currentBooks}
+                toReadBooks={toReadBooks}
+                readBooks={readBooks}
+                booksFetchedoks={booksFetched}
+                setSelectedShelf={setSelectedShelf}
+              />
+            )
+          }
+        ></Route>
+        <Route
+          path="/search"
+          element={
+            booksFetched && (
+              <SearchPage
+                title="Search Result"
+                books={allAvaiableBooks}
+                setSelectedShelf={setSelectedShelf}
+              />
+            )
+          }
+        ></Route>
       </Routes>
     </div>
   );
