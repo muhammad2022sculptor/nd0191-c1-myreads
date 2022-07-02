@@ -45,6 +45,7 @@ export default function SearchPage({ books, setSelectedShelf }) {
       <div className="search-books-results">
         <ol className="books-grid">
           {searchedBooks.length > 0 &&
+            search &&
             searchedBooks.map((book) => (
               <Book
                 key={book.id}
