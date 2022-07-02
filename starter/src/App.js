@@ -1,39 +1,32 @@
 import "./App.css";
-import { useState } from "react";
-import BookShelf from "./BookShelf";
-import * as BookApi from "./BooksApi";
+import { useState, useEffect } from "react";
+import * as BookApi from "./BooksAPI";
 import SearchPage from "./SearchPage";
+import HomePage from "./HomePage";
 
 function App() {
-  const [showSearchPage, setShowSearchpage] = useState(false);
+  const [showSearchPage, setShowSearchPage] = useState(false);
 
   useEffect(() => {
-    async () => {
+    const getAll = async () => {
       let res = await BookApi.getAll();
       console.log(res);
     };
+    getAll();
   }, []);
 
   return (
     <div className="app">
       {showSearchPage ? (
-        <SearchPage />
+        <SearchPage
+          showSearchPage={showSearchPage}
+          setShowSearchPage={setShowSearchPage}
+        />
       ) : (
-        <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-          <div className="list-books-content">
-            <div>
-              <BookShelf title="Currently Reading" />
-              <BookShelf title="Want to Read" />
-              <BookShelf title="Read" />
-            </div>
-          </div>
-          <div className="open-search">
-            <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
-          </div>
-        </div>
+        <HomePage
+          showSearchPage={showSearchPage}
+          setShowSearchPage={setShowSearchPage}
+        />
       )}
     </div>
   );

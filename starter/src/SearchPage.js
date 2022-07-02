@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function SearchPage() {
+export default function SearchPage({ showSearchPage, setShowSearchpage }) {
   return (
     <div className="search-books">
       <div className="search-books-bar">
