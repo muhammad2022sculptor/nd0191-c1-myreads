@@ -1,6 +1,12 @@
 import React from "react";
 
 export default function Book() {
+  function showSelectedOption() {
+    let select = document.getElementById("select-section");
+    let text = select.options[select.selectedIndex].value;
+    console.log(text);
+  }
+
   return (
     <li>
       <div className="book">
@@ -15,7 +21,12 @@ export default function Book() {
             }}
           ></div>
           <div className="book-shelf-changer">
-            <select>
+            <select
+              id="select-section"
+              onChange={() => {
+                showSelectedOption();
+              }}
+            >
               <option value="none" disabled>
                 Move to...
               </option>
