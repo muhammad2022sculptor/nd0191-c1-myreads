@@ -3,37 +3,39 @@ import { Link } from "react-router-dom";
 import Book from "./Book";
 import * as BookApi from "./BooksAPI";
 
+let booksHere;
+
 export default function SearchPage({ books, setSelectedShelf }) {
   const [search, setSearch] = useState("");
   const [searchedBooks, setSearchedBooks] = useState([]);
-
-  const searchQuery = async () => {
-    try {
-      let data = await BookApi.search(search, 20);
-      if (data.length > 0) {
-        let booksFromHomePage = data.filter((dataItem) => {
-          return books.find((booksItem) => {
-            return dataItem.id === booksItem.id
-              ? (dataItem.shelf = booksItem.shelf)
-              : false;
-          });
-        });
-        let booksFromSearchPage = data.filter((dataItem) => {
-          return !books.find((booksItem) => {
-            return dataItem.id === booksItem.id ? dataItem : false;
-          });
-        });
-        setSearchedBooks(booksFromHomePage.concat(booksFromSearchPage));
-      } else {
-        setSearchedBooks([]);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  booksHere = books;
 
   useEffect(() => {
     if (search !== "") {
+      const searchQuery = async () => {
+        try {
+          let data = await BookApi.search(search, 20);
+          if (data.length > 0) {
+            let booksFromHomePage = data.filter((dataItem) => {
+              return booksHere.find((booksItem) => {
+                return dataItem.id === booksItem.id
+                  ? (dataItem.shelf = booksItem.shelf)
+                  : false;
+              });
+            });
+            let booksFromSearchPage = data.filter((dataItem) => {
+              return !booksHere.find((booksItem) => {
+                return dataItem.id === booksItem.id ? dataItem : false;
+              });
+            });
+            setSearchedBooks(booksFromHomePage.concat(booksFromSearchPage));
+          } else {
+            setSearchedBooks([]);
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      };
       searchQuery();
     } else {
       setSearchedBooks([]);
