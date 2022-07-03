@@ -41,6 +41,7 @@ function App() {
   return (
     <div className="app">
       <Routes>
+        <Route path="*" element={<NotFound />} />
         <Route
           path="/"
           element={

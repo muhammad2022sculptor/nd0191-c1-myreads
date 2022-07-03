@@ -35,7 +35,7 @@ export default function SearchPage({ books, setSelectedShelf }) {
           <input
             value={search}
             onChange={(e) => {
-              setSearch(e.target.value.trim());
+              setSearch(e.target.value);
             }}
             type="text"
             placeholder="Search by title, author, or ISBN"
