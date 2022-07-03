@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import * as BookApi from "./BooksAPI";
 import SearchPage from "./SearchPage";
 import HomePage from "./HomePage";
+import NotFound from "./NotFound";
 
 function App() {
   const [allAvaiableBooks, setAllAvailableBooks] = useState();
