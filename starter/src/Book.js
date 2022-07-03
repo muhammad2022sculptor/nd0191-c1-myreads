@@ -20,7 +20,7 @@ export default function Book({ book, setSelectedShelf }) {
                 setSelectedShelf(event.target.value, book);
               }}
             >
-              <option value="none" disabled>
+              <option value="moveTo" disabled>
                 Move to...
               </option>
               <option value="currentlyReading">Currently Reading</option>
