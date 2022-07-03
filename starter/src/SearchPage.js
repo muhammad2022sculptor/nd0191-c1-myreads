@@ -7,22 +7,37 @@ export default function SearchPage({ books, setSelectedShelf }) {
   const [search, setSearch] = useState("");
   const [searchedBooks, setSearchedBooks] = useState([]);
 
-  useEffect(() => {
-    async function searchQuery() {
-      try {
-        if (search !== "") {
-          let data = await BookApi.search(search, 30);
-          if (data) {
-            setSearchedBooks(data);
-          }
-        } else {
-          setSearchedBooks([]);
-        }
-      } catch (e) {
-        console.log(e);
+  const searchQuery = async () => {
+    try {
+      let data = await BookApi.search(search, 20);
+      if (data.length > 0) {
+        let booksFromHomePage = data.filter((dataItem) => {
+          return books.find((booksItem) => {
+            return dataItem.id === booksItem.id
+              ? (dataItem.shelf = booksItem.shelf)
+              : false;
+          });
+        });
+        let booksFromSearchPage = data.filter((dataItem) => {
+          return !books.find((booksItem) => {
+            return dataItem.id === booksItem.id ? dataItem : false;
+          });
+        });
+        setSearchedBooks(booksFromHomePage.concat(booksFromSearchPage));
+      } else {
+        setSearchedBooks([]);
       }
+    } catch (e) {
+      console.log(e);
     }
-    searchQuery();
+  };
+
+  useEffect(() => {
+    if (search !== "") {
+      searchQuery();
+    } else {
+      setSearchedBooks([]);
+    }
   }, [search]);
 
   return (
@@ -45,7 +60,7 @@ export default function SearchPage({ books, setSelectedShelf }) {
       <div className="search-books-results">
         <ol className="books-grid">
           {searchedBooks.length > 0 &&
-            search &&
+            search.length > 0 &&
             searchedBooks.map((book) => (
               <Book
                 key={book.id}
